@@ -6,7 +6,7 @@ var table = document.getElementById("year_calendar");
 // NOTE: that this is the date of the user's device, not of the database. This may need to be changed eventually
 var date = new Date;
 var year = date.getFullYear();
-var month = date.getMonth();
+var month = date.getMonth() + 1;
 console.log(date);
 var display_date = "<b>" + month + " " + date.getDate() + " " + year + "</b>";
 var table_caption = table.createCaption();
