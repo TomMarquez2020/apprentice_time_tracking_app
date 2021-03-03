@@ -7,7 +7,6 @@ var table = document.getElementById("year_calendar");
 var date = new Date;
 var year = date.getFullYear();
 var month = date.getMonth() + 1;
-console.log(date);
 var display_date = "<b>" + month + " " + date.getDate() + " " + year + "</b>";
 var table_caption = table.createCaption();
 table_caption.innerHTML = display_date;
@@ -19,7 +18,7 @@ var len = year_array.length;
 row = table.insertRow();
 for (var i = 0; i < len; i++) {
     var ele = row.insertCell(i);
-    ele.innerHTML = '<input id="' + year_array[i] + year + '" type="button">';
+    ele.innerHTML = '<input id="' + year_array[i] + year + '" type="button" class="CalButton">';
 }
 
 // add row of th
