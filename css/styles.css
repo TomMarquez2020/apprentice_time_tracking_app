@@ -1,7 +1,80 @@
+@charset "utf-8";
 
+body {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 
+div {
+    margin: 0px auto;
+    max-width: 720px;
+    width: 100%;
+}
+
+/********************************* styles for the year calendar page ************************************/
 
 .CalButton {
-    width: 2.5em; 
-    height: 2em;
+    width: 100%;
+    height: 8em;
 }
+
+#yc_main{
+    display: flex;
+}
+
+section {
+    margin: 4px;
+    width: auto;
+}
+
+#yc_calendar_block, #yc_info{
+    display: block;
+    width: 50%;
+}
+
+#yc_total_hours {
+    width: 100%;
+}
+
+#yc_year_calendar td{
+    width: 20%;
+    display: inline-block;
+    padding: 0;
+    margin: 3px;
+}
+
+/********************************* End styles for the year calendar page ************************************/
+
+/********************************* styles for the month calendar page ************************************/
+#mc_calendar_block {
+    width: 100%;
+    display: block;
+}
+
+#mc_table td{
+    width: 100%;
+    display: inline-block;
+}
+
+#mc_table tbody td {
+    border: 1px solid black;
+    border-collapse: collapse;   
+    height: 4em;
+}
+
+#mc_table td {
+    width: 13%;
+}
+
+#mc_table thead td {
+    text-align: center;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+#mc_table thead tr{
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/********************************* End styles for the month calendar page ************************************/
+

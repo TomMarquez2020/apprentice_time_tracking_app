@@ -1,22 +1,21 @@
 <?php require_once('connect/conn.php');
 
-    // pull data for test person...Bobby Little Boy
+    // pull data for test person...Bobby Little Boy, personid = 1...this will need to be changed to Get id from login page
     // Info that needs to be displayed for apprentice: Occupation, Student Name,(Year and Wage will need to be figured out)
 
     $query = "SELECT 
             CONCAT(p.fname, ' ', p.middle, ' ', p.lname) as fullname,
+            p.personid as id,
             o.occupationname as occupation
             FROM personstbl p
             JOIN personoccupationstbl po ON p.personid = po.perspersoccfk
             JOIN occupationstbl o ON o.occupationid = po.occpersoccfk
-            WHERE personid = 1
+            WHERE personid = 1 
+            LIMIT 1
             ";
     $rs = mysqli_query($con, $query);
     $row = mysqli_fetch_assoc($rs);
     $count = mysqli_num_rows($rs);
-
-    //TODO: should probably check here to make sure query does not return more than one record
-
 
 ?>
 
@@ -27,25 +26,24 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/styles.css">
-        <title>Apprentice Main Page</title>
+        <title>Year Calendar</title>
         <style>
-            
+
         </style>
     </head>
 
     <body>
-        <div id="main">
+        <div id="yc_main">
+            <!-- yc = "landing page" -->
+            <section id="yc_calendar_block">
 
-            <section id="calendar_block">
-                <div>
-                </div>
-
-                <table id="year_calendar">
+                <!-- user data attribute to pass on userid to next page...not sure if this is the right way to do this -->
+                <table id="yc_year_calendar" data-userid="<?php echo $row[id] ?>">
                 </table>
 
             </section>
 
-            <section>
+            <section id="yc_info">
                 <span>
                     <h2><?php echo $row['occupation']; ?> </h2>
                 </span>
@@ -58,7 +56,12 @@
             </section>
         </div>
 
-        <script src="js/scripts.js"></script>
+        <div id="yc_total_hours">
+            <section>
+
+            </section>
+        </div>
+        <script src="js/year_calendar_script.js"></script>
     </body>
 
 </html>
