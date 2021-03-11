@@ -1,0 +1,10 @@
+    - add some dummy data for work progress
+        - data to "apprenticeoccupationprogresstbl"
+            - occupation work process fk
+            - hours 
+            - date
+    - pull data to display in calendar 
+        - not exaclty sure how I'm going to add the work progress to the calendar...I'll need to think about this part 
+    - add buttons to the calendar <td>s that will either redirect to another page or create a modal of some sort
+    to fill in data 
+        - I will probably have to add in more dummy data for this 

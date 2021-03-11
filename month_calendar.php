@@ -1,9 +1,24 @@
 <!-- PHP to display form data from year_calendar.php -->
 
+<?php require_once('connect/conn.php'); ?>
 <?php
+
     $data     = $_GET['data'];
     // split data into 3 variables
-    list($id, $month, $year) = explode("_", $data)
+    list($id, $month, $year) = explode("_", $data);
+
+    $query = "SELECT 
+                aop.date,
+                SUM(aop.hours) as DailySum
+                FROM personoccupationstbl p
+                join apprenticeoccupationprogresstbl aop ON aop.poaopfk = p.poid
+                where p.perspersoccfk = $id 
+                AND YEAR(aop.date) = $year 
+                AND MONTHNAME(aop.date) = 'March'
+                GROUP BY aop.date
+            ";
+    $rs = mysqli_query($con, $query);
+    $sql_data = mysqli_fetch_all($rs);
 ?>
 
 <!DOCTYPE html>
@@ -19,21 +34,16 @@
         </style>
     </head>
 
-    <body>
-        <!-- ?php echo $data ?> 
-        ?php echo $id ?>
-        ?php echo $month ?>
-        ?php echo $year ?> -->
-        
+    <body>      
         <div id="mc_main">
             <section>
                 <h2 id="mc_data"><?php echo $month . ' ' . $year ?></h2>
             </section>
             
             <form type="post">
-
                 <input type="hidden" id="month" name="month" value="<?php echo $month ?>">
                 <input type="hidden" id="year" name="year" value="<?php echo $year ?>">
+                <input type="hidden" id="id" name="id" value="<?php echo $id ?>">
 
                 <section id="mc_calendar_block">
                     <table id="mc_table">
@@ -47,8 +57,12 @@
 
         </div>
 
-
+        <script src="js/jquery.js"></script>
         <script src="js/month_calendar_script.js"></script>
     </body>
 
 </html>
+
+<?php
+    mysqli_close($con);
+?>
