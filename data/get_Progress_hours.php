@@ -1,3 +1,5 @@
+<!-- This is not currently being used -->
+
 <?php require_once('../connect/conn.php'); ?>
 <?php 
     try {

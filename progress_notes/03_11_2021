@@ -1,0 +1,8 @@
+progess: 
+    -fixed the issue with pulling php data arrays and using it in javascript
+    -this is needed to add hours to the calendar days 
+    -did some styling to figure out how the hours will be displayed in the cell 
+next steps: 
+    -add the actual hours to the cell instead of a hardcoded number 
+    -need to make the cell a button with an href (or click for a modal...not sure on this one yet)
+    -need to make the submit button do something

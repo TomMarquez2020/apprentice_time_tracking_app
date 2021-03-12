@@ -64,6 +64,9 @@ section {
 #mc_table td {
     width: 13%;
 }
+#mc_table tbody h2 {
+    text-align: center;
+}
 
 #mc_table thead td {
     text-align: center;

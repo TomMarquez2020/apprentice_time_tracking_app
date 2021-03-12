@@ -6,19 +6,24 @@
     $data     = $_GET['data'];
     // split data into 3 variables
     list($id, $month, $year) = explode("_", $data);
+    $data_array   = array();
 
     $query = "SELECT 
-                aop.date,
-                SUM(aop.hours) as DailySum
-                FROM personoccupationstbl p
-                join apprenticeoccupationprogresstbl aop ON aop.poaopfk = p.poid
-                where p.perspersoccfk = $id 
-                AND YEAR(aop.date) = $year 
-                AND MONTHNAME(aop.date) = 'March'
-                GROUP BY aop.date
-            ";
-    $rs = mysqli_query($con, $query);
-    $sql_data = mysqli_fetch_all($rs);
+                    DAY(aop.date) AS Day,
+                    SUM(aop.hours) as DailySum
+                    FROM personoccupationstbl p
+                    join apprenticeoccupationprogresstbl aop ON aop.poaopfk = p.poid
+                    where p.perspersoccfk = $id
+                    AND YEAR(aop.date) = $year 
+                    AND MONTHNAME(aop.date) = '$month'
+                    GROUP BY aop.date
+                ";
+        $rs = mysqli_query($con, $query);
+        while($sql_data = mysqli_fetch_assoc($rs)){
+            $data_array[] = $sql_data;
+        }
+        $sql_data = json_encode($data_array);
+
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +46,7 @@
             </section>
             
             <form type="post">
+                <input type="hidden" id="data" name="data" value='<?php echo $sql_data ?>'>
                 <input type="hidden" id="month" name="month" value="<?php echo $month ?>">
                 <input type="hidden" id="year" name="year" value="<?php echo $year ?>">
                 <input type="hidden" id="id" name="id" value="<?php echo $id ?>">
