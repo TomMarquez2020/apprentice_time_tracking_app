@@ -1,15 +1,11 @@
 // script for the month_calendar.php page
 
 var table = document.getElementById("mc_table");
-var month = document.getElementById("month").value;
-var year = document.getElementById("year").value;
-var id = document.getElementById("id").value;
+var data_month = document.getElementById("month").value;
+var data_year = document.getElementById("year").value;
+var data_id = document.getElementById("id").value;
 var sql_data = document.getElementById("data").value;
-
-console.log(sql_data);
-
 var parse_data = JSON.parse(sql_data);
-console.log(parse_data);
 
 // // get progress hours data
 // // Todo: the ajax data call isn't completely working...it's an async issue
@@ -25,13 +21,13 @@ console.log(parse_data);
 
 var days_of_the_week = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 var months_array = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "Novevember", "December"];
-var month_num = months_array.indexOf(month);
+var month_num = months_array.indexOf(data_month);
 
-var days_in_month = daysInMonth(month_num, year);
+var days_in_month = daysInMonth(month_num, data_year);
 
 // add body
 table.appendChild(document.createElement('tbody'));
-var cal_array = getCalendarArray(month_num, year, days_in_month);
+var cal_array = getCalendarArray(month_num, data_year, days_in_month);
 
 addRowCell(cal_array, table)
 
@@ -76,26 +72,51 @@ function getCalendarArray(month_num, year, days_in_month) {
             month_array_index += 1;
         }
     }
-    //console.log(cal_array);
     return cal_array;
 }
 
+// Adds a row and a cell (including content) to the table
+// If the passed in element is a table, this assumes an element to the tbody is being added
+// If it's a tbody, then check to see if Daily Sum needs to be added to the day
 function addRowCell(data, element) {
-    var row = element.insertRow(0)
+    var row = element.insertRow(0); //insert row
     var d_len = data.length;
-    var num_dimension = data.filter(Array.isArray).length; // if data is a multi dimensional array
     for (var j = 0; j < d_len; j++) {
         var cell = row.insertCell(j);
-        //cell.innerHTML = data[j] + ' 8';
-        let value1 = document.createTextNode(data[j]);
-        console.log(data[j]);
+        let day = data[j];
+        let value1 = document.createTextNode(day);
         cell.appendChild(value1);
-        if (element.nodeName === 'TABLE' && data[j] !== ' ') {
-            let value2 = document.createTextNode("8");
+        if (data[j] !== ' ' && element.nodeName === 'TABLE') {
+            cell.addEventListener('click', function () {
+                clickTD(day);
+            });
+            cell.style.cursor = "pointer";
+        }
+
+        // If table element, check sql data array for daily sum to be added
+        // Only add daily sum if "day" equals the current day
+        if (element.nodeName === 'TABLE' && day !== ' '
+            && parse_data.some(item => item.Day === day)) {
+            let daily_sum = returnDailySum(day);
             let h3 = document.createElement('h2');
-            h3.appendChild(value2);
+            // set id attribute to figure out all of the days that have daily sum
+            //h3.setAttribute()
+            h3.innerText = daily_sum;
             cell.appendChild(h3);
         }
 
     }
 }
+
+// Returns the Daily Sum value from the sql data array
+function returnDailySum(day) {
+    var result = parse_data.filter(x => x.Day === String(day));
+    return String(result[0].DailySum);
+}
+
+function clickTD(day) {
+    let data = data_id + "_" + day + "_" + data_month + "_" + data_year;
+    let href_link = "add_dailyhours.php?data=" + data;
+    window.location.href = href_link;
+}
+

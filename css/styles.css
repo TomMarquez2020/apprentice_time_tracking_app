@@ -45,6 +45,7 @@ section {
 /********************************* End styles for the year calendar page ************************************/
 
 /********************************* styles for the month calendar page ************************************/
+
 #mc_calendar_block {
     width: 100%;
     display: block;
@@ -64,6 +65,11 @@ section {
 #mc_table td {
     width: 13%;
 }
+
+/* #mc_table tbody td {
+    cursor: pointer;
+} */
+
 #mc_table tbody h2 {
     text-align: center;
 }

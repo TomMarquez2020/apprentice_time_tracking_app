@@ -1,0 +1,11 @@
+-add hours to the month calendar page
+-tds now link to new add_dailyhours page 
+
+next steps:
+-put together add_dailyhours page 
+    -write sql to pull supervisor name, work processes, 
+    and any hours worked on that particular day 
+    -page will be a form 
+    -save/edit
+    -link back to monthly_calendar
+-finish submit button for monthly_calendar 
