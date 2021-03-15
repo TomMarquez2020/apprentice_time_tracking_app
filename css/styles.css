@@ -4,7 +4,7 @@ body {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-div {
+div, main{
     margin: 0px auto;
     max-width: 720px;
     width: 100%;
