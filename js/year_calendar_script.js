@@ -4,7 +4,7 @@ var table = document.getElementById("yc_year_calendar");
 if (table) {
     var id = table.dataset.userid;
 
-    var months_array = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "Novevember", "December"];
+    var months_array = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "Novevember", "December"];
 
     // add date to caption
     // NOTE: that this is the date of the user's device, not of the database. This may need to be changed eventually

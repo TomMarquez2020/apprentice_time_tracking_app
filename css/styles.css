@@ -17,7 +17,7 @@ div, main{
     height: 8em;
 }
 
-#yc_main{
+#yc_main, #ad_main{
     display: flex;
 }
 
@@ -86,4 +86,17 @@ section {
 }
 
 /********************************* End styles for the month calendar page ************************************/
+
+/********************************* Begin styles for the Add Daily hours page ************************************/
+#ad_left {
+    width: 65%;
+}
+
+#ad_right {
+    width: 35%;
+}
+
+
+
+/********************************* End styles for the Add Daily hours page ************************************/
 

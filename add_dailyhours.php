@@ -10,7 +10,7 @@
 
 $data     = $_GET['data'];
 // split data into 3 variables
-list($id, $month, $year) = explode("_", $data);
+list($id, $day, $month, $year) = explode("_", $data);
 $data_array   = array();
 
 $query = "SELECT 
@@ -49,7 +49,7 @@ $sql_data = json_encode($data_array);
 </head>
 
 <body>
-    <main id="ad_dailyhours">
+    <main id="ad_main">
         <section id="ad_left">
             <h2 id="ad_date">Date Goes here</h2>
             <!--    Table here for any work done followed by 2 text fields (1 for adding hours and 1 for adding process) 
