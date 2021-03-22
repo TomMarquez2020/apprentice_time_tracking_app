@@ -7,33 +7,64 @@
 //          3. all hour work and process character of the passed in date for apprentice if any
 
 //  roughly this:
+session_start();
 
-$data     = $_GET['data'];
-// split data into 3 variables
-list($id, $day, $month, $year) = explode("_", $data);
-$data_array   = array();
+$day     = $_GET['data'];
+$month = $_SESSION['month'];
+$year = $_SESSION['year'];
+$id = $_SESSION['id'];
 
-$query = "SELECT 
-            supervisor.fname, supervisor.lname
+// get index of month + 1
+$months_array = array(
+    1 => "January",
+    2 => "February",
+    3 => "March",
+    4 => "April",
+    5 => "May",
+    6 => "June",
+    7 => "July",
+    8 => "August",
+    9 => "September",
+    10 => "October",
+    11 => "Novevember",
+    12 => "December",
+);
+$month_index = array_search($month, $months_array);
+$date = $year . '-' . $month_index . '-' . $day;
 
-            FROM personoccupationstbl p
-            JOIN occupationworkprocessestbl ow ON ow.occfk = p.occpersoccfk 
-            LEFT JOIN apprenticeoccupationprogresstbl aop ON aop.poaopfk = p.poid 
-                                    AND aop.owpfk = ow.owpid
-            JOIN apprentsuperstbl aps ON aps.persappsupfk = p.perspersoccfk
-            JOIN supervisorstbl s ON s.supervisorid = aps.supappsupfk
-            JOIN personoccupationstbl supocc ON supocc.perspersoccfk = s.perssupfk
-            JOIN personstbl supervisor ON supervisor.personid = supocc.perspersoccfk
-            WHERE p.perspersoccfk = 1
+// get supervisors name
+$supquery = "SELECT concat(p.fname, ' ', p.lname) AS SuperName
+            FROM supervisorstbl s
+            JOIN apprentsuperstbl a ON a.supappsupfk = s.supervisorid
+            JOIN personstbl p ON p.personid = s.perssupfk
+            WHERE a.persappsupfk = $id
                 ";
 
 // Question here is do we want to get the all of the data for this page with one SQL call, or break it out?
 
-$rs = mysqli_query($con, $query);
-while ($sql_data = mysqli_fetch_assoc($rs)) {
-    $data_array[] = $sql_data;
+$suprs = mysqli_query($con, $supquery);
+$suprow = mysqli_fetch_assoc($suprs);
+$supname = $suprow["SuperName"];
+
+// get processes
+$proc_data_array   = array();
+$procquery = "SELECT ow.owpid AS workpid, ow.processletter, w.pname, aop.hours 
+            FROM personstbl p 
+            JOIN personoccupationstbl po ON po.perspersoccfk = p.personid
+            JOIN occupationworkprocessestbl ow ON po.occpersoccfk = ow.occfk
+            JOIN workprocessestbl w ON w.workprocessid = ow.procfk
+            LEFT JOIN apprenticeoccupationprogresstbl aop ON aop.owpfk = ow.owpid 
+									AND aop.poaopfk = po.perspersoccfk
+                                    AND aop.date = '$date'
+            WHERE p.personid = $id
+            ";
+$procrs = mysqli_query($con, $procquery);
+while ($sql_data = mysqli_fetch_assoc($procrs)) {
+    $proc_data_array[] = $sql_data;
 }
-$sql_data = json_encode($data_array);
+$proc_data_len = count($proc_data_array);
+$json_proc_data = json_encode($proc_data_array, true);
+// echo json_encode($json_proc_data);
 
 ?>
 
@@ -51,7 +82,8 @@ $sql_data = json_encode($data_array);
 <body>
     <main id="ad_main">
         <section id="ad_left">
-            <h2 id="ad_date">Date Goes here</h2>
+            <h2 id="ad_date"><?php echo $month . ' ' . $day . ' ' . $year ?></h2>
+            <h3 id="ad_supname"><?php echo $supname ?></h3>
             <!--    Table here for any work done followed by 2 text fields (1 for adding hours and 1 for adding process) 
                     The second text field could be a drop down of processes
             -->
@@ -59,7 +91,23 @@ $sql_data = json_encode($data_array);
         <section id="ad_right">
             <h2>Work Processes</h2>
             <!--    Another table here for character process and process name -->
-
+            <div id="ad_table">
+                <div id="ad_table_body">
+                    <?php foreach ($proc_data_array as $item) { ?>
+                        <div class="ad_table_row" id="<?php echo $item['workpid'] ?>">
+                            <div class="ad_table_cell shortcell">
+                                <input type="text" value="<?php echo $item['hours'] ?>">
+                            </div>
+                            <div class="ad_table_cell shortcell">
+                                <?php echo $item['processletter'] ?>.
+                            </div>
+                            <div class="ad_table_cell">
+                                <?php echo $item['pname'] ?>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
         </section>
     </main>
 

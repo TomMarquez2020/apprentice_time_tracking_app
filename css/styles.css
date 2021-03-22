@@ -10,6 +10,10 @@ div, main{
     width: 100%;
 }
 
+.hidden {
+    display: none;
+}
+
 /********************************* styles for the year calendar page ************************************/
 
 .CalButton {
@@ -89,14 +93,40 @@ section {
 
 /********************************* Begin styles for the Add Daily hours page ************************************/
 #ad_left {
-    width: 65%;
-}
-
-#ad_right {
     width: 35%;
 }
 
+#ad_right {
+    width: 65%;
+}
 
+/* table css */
+#ad_table {
+    width: 100%;
+    display: table;
+}
+
+#ad_table_body {
+    display: table-row-group;
+}
+
+.ad_table_row {
+    display: table-row;
+}
+
+.ad_table_cell {
+    display: table-cell;
+}
+
+.shortcell {
+    width: 5%;
+}
+
+.ad_table_row input {
+    border: none;
+    border-bottom: 1px solid #000;
+    width: 50%;
+}
 
 /********************************* End styles for the Add Daily hours page ************************************/
 

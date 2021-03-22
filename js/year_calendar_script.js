@@ -23,7 +23,7 @@ if (table) {
     for (var i = 0; i < len; i++) {
         var ele = row.insertCell(i);
         var month = months_array[i].substring(0, 3);
-        var year_id = id + '_' + months_array[i] + '_' + year;
+        var year_id = months_array[i] + '_' + year;
         var href_link = "'month_calendar.php?data=" + year_id + "'";
         ele.innerHTML = '<input id="redirect_button" value="' + month + '"'
             + ' type="button" class="CalButton" onClick="location.href=' + href_link

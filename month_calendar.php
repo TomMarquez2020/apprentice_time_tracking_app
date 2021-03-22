@@ -2,10 +2,14 @@
 
 <?php require_once('connect/conn.php'); ?>
 <?php
+session_start();
 
 $data     = $_GET['data'];
 // split data into 3 variables
-list($id, $month, $year) = explode("_", $data);
+list($month, $year) = explode("_", $data);
+$_SESSION['month'] = $month;
+$_SESSION['year'] = $year;
+$id = $_SESSION["id"];
 $data_array   = array();
 
 $query = "SELECT 

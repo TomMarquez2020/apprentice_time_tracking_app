@@ -7,18 +7,6 @@ var data_id = document.getElementById("id").value;
 var sql_data = document.getElementById("data").value;
 var parse_data = JSON.parse(sql_data);
 
-// // get progress hours data
-// // Todo: the ajax data call isn't completely working...it's an async issue
-// var ajax_data = { id: id, month: month, year: year };
-// var url = 'data/get_Progress_hours.php';
-// var sql_data_ajax = ajaxCall(ajax_data, 'GET', url);
-// var sql_data = "";
-// sql_data_ajax.then(data => sql_data);
-
-// console.log(sql_data_ajax);
-// console.log(sql_data);
-
-
 var days_of_the_week = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 var months_array = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "Novevember", "December"];
 var month_num = months_array.indexOf(data_month);
@@ -48,6 +36,7 @@ addRowCell(days_of_the_week, header);
 function daysInMonth(month, year) {
     return new Date(year, month + 1, 0).getDate();
 }
+
 
 function getCalendarArray(month_num, year, days_in_month) {
     var cal_array = [];
@@ -115,7 +104,8 @@ function returnDailySum(day) {
 }
 
 function clickTD(day) {
-    let data = data_id + "_" + day + "_" + data_month + "_" + data_year;
+    // let data = data_id + "_" + day + "_" + data_month + "_" + data_year;
+    let data = day;
     let href_link = "add_dailyhours.php?data=" + data;
     window.location.href = href_link;
 }
