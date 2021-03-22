@@ -92,6 +92,17 @@ $json_proc_data = json_encode($proc_data_array, true);
             <h2>Work Processes</h2>
             <!--    Another table here for character process and process name -->
             <div id="ad_table">
+                <div id="ad_table_header">
+                    <div class="ad_table_cell shortcell">
+                        Hours
+                    </div>
+                    <div class="ad_table_cell shortcell">
+
+                    </div>
+                    <div class="ad_table_cell">
+                        Process
+                    </div>
+                </div>
                 <div id="ad_table_body">
                     <?php foreach ($proc_data_array as $item) { ?>
                         <div class="ad_table_row" id="<?php echo $item['workpid'] ?>">

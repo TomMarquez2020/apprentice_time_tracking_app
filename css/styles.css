@@ -100,7 +100,7 @@ section {
     width: 65%;
 }
 
-/* table css */
+/* table css, from https://wisdmlabs.com/blog/responsive-tables-using-css-div-tag/ */
 #ad_table {
     width: 100%;
     display: table;
@@ -108,6 +108,20 @@ section {
 
 #ad_table_body {
     display: table-row-group;
+}
+
+#ad_table_header {
+    display: table-header-group;
+    font-weight: bold;
+    font-size: 15px;
+    border-bottom: 1px solid #000;
+}
+
+#ad_table_cell {
+    display: table-cell;
+    padding: 10px;
+    text-align: justify;
+    border-bottom: 1px solid #000;
 }
 
 .ad_table_row {
