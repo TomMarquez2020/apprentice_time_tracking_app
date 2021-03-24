@@ -83,6 +83,7 @@ $json_proc_data = json_encode($proc_data_array, true);
     <main id="ad_main">
         <section id="ad_left">
             <h2 id="ad_date"><?php echo $month . ' ' . $day . ' ' . $year ?></h2>
+            <h3><u>Supervisor Name</u></h3>
             <h3 id="ad_supname"><?php echo $supname ?></h3>
             <!--    Table here for any work done followed by 2 text fields (1 for adding hours and 1 for adding process) 
                     The second text field could be a drop down of processes
@@ -90,35 +91,39 @@ $json_proc_data = json_encode($proc_data_array, true);
         </section>
         <section id="ad_right">
             <h2>Work Processes</h2>
-            <!--    Another table here for character process and process name -->
-            <div id="ad_table">
-                <div id="ad_table_header">
-                    <div class="ad_table_cell shortcell">
-                        Hours
-                    </div>
-                    <div class="ad_table_cell shortcell">
-
-                    </div>
-                    <div class="ad_table_cell">
-                        Process
-                    </div>
-                </div>
-                <div id="ad_table_body">
-                    <?php foreach ($proc_data_array as $item) { ?>
-                        <div class="ad_table_row" id="<?php echo $item['workpid'] ?>">
-                            <div class="ad_table_cell shortcell">
-                                <input type="text" value="<?php echo $item['hours'] ?>">
-                            </div>
-                            <div class="ad_table_cell shortcell">
-                                <?php echo $item['processletter'] ?>.
-                            </div>
-                            <div class="ad_table_cell">
-                                <?php echo $item['pname'] ?>
-                            </div>
+            <form action="process_daily_hours.php" method="post">
+                <!--    Another table here for character process and process name -->
+                <div id="ad_table">
+                    <div id="ad_table_header">
+                        <div class="ad_table_cell shortcell">
+                            Hours
                         </div>
-                    <?php } ?>
+                        <div class="ad_table_cell shortcell">
+
+                        </div>
+                        <div class="ad_table_cell">
+                            Process
+                        </div>
+                    </div>
+                    <div id="ad_table_body">
+                        <?php foreach ($proc_data_array as $item) { ?>
+                            <div class="ad_table_row" id="workpid_<?php echo $item['workpid'] ?>" name="workpid_<?php echo $item['workpid'] ?>">
+                                <div class="ad_table_cell shortcell">
+                                    <input type="text" value="<?php echo $item['hours'] ?>" name="hours_<?php echo $item['workpid'] ?>">
+                                </div>
+                                <div class="ad_table_cell shortcell">
+                                    <?php echo $item['processletter'] ?>.
+                                </div>
+                                <div class="ad_table_cell">
+                                    <?php echo $item['pname'] ?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
                 </div>
-            </div>
+                <br>
+                <input type="submit" value="save">
+            </form>
         </section>
     </main>
 
