@@ -14,6 +14,10 @@ $month = $_SESSION['month'];
 $year = $_SESSION['year'];
 $id = $_SESSION['id'];
 
+// set a temporary day session. 
+// kill session after processing daily hours
+$_SESSION['day'] = $day;
+
 // get index of month + 1
 $months_array = array(
     1 => "January",
@@ -38,9 +42,8 @@ $supquery = "SELECT concat(p.fname, ' ', p.lname) AS SuperName
             JOIN apprentsuperstbl a ON a.supappsupfk = s.supervisorid
             JOIN personstbl p ON p.personid = s.perssupfk
             WHERE a.persappsupfk = $id
+            LIMIT 1
                 ";
-
-// Question here is do we want to get the all of the data for this page with one SQL call, or break it out?
 
 $suprs = mysqli_query($con, $supquery);
 $suprow = mysqli_fetch_assoc($suprs);
