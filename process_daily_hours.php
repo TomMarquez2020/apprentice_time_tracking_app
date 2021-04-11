@@ -68,26 +68,54 @@ if (isset($_POST['form_submitted'])) {
     $obj = json_decode($json_form_values, TRUE);
 
     // loop through posted data 
+    // TODO: Need to figure out how to handle values that have been edited to blank
     foreach ($obj as $key => $value) {
-        // if key already exists in database, update
-        if (in_array($key, $data_array)) {
-            echo 'true1';
+        $con->begin_transaction();
+        try {
+            // if key already exists in database, update
+            if (in_array($key, $data_array)) {
+                $query_update = "
+                    UPDATE apprenticeoccupationprogresstbl ao
+                    JOIN personoccupationstbl po ON po.poid = ao.poaopfk
+                    JOIN personstbl p ON p.personid = po.perspersoccfk
+                    SET ao.hours = ?
+                    WHERE ao.date = '$date'
+                    AND p.personid = $id
+                    AND ao.owpfk = $key;
+                ";
+                // echo $value;
+                $stmt = $con->prepare($query_update);
+                if ($stmt) {
+                    $stmt->bind_param("i", $value);
+                    $stmt->execute();
+                    $stmt->close();
+                } else {
+                    // should probably handle failures differently here
+                    echo "Failure!!!" . $con->error;
+                }
+            }
+            //else insert
+            else {
+                $query_insert = "
+                INSERT INTO apprenticeoccupationprogresstbl(poaopfk, owpfk, hours, date) VALUES(?, ?, ?, ?);
+                ";
+                $stmt = $con->prepare($query_insert);
+                if ($stmt) {
+                    $stmt->bind_param("iiis", $id, $key, $value, $date);
+                    $stmt->execute();
+                    $stmt->close();
+                } else {
+                    echo "Failure!!! " . $con->error;
+                }
+            }
+            $con->commit();
+        } catch (mysqli_sql_exception $exception) {
+            // should probably return an error message or something if there is an exception thrown here
+            $con->rollback();
         }
-        //else insert
-    }
+    } // end if 
 
-    // post data back to database here
-    // use parameterized query
-    // $query = "INSERT INTO namestbl (firstname, lastname) VALUES (?, ?)"
-    // $stmt = mysqli_prepare($conn, $query);
-    // mysqli_stmt_bind_param($stmt, "ss", $firstname, $lastname);
-    // mysqli_stmt_execute($stmt);
-    // mysqli_stmt_close($stmt);
-    // mysqli_close($conn);
-
-} // end if 
-
-// remove day session
-unset($_SESSION['day']);
-
+    // remove day session
+    unset($_SESSION['day']);
+}
 ?>
