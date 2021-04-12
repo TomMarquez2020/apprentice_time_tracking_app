@@ -86,7 +86,7 @@ if (isset($_POST['form_submitted'])) {
                 // echo $value;
                 $stmt = $con->prepare($query_update);
                 if ($stmt) {
-                    $stmt->bind_param("i", $value);
+                    $stmt->bind_param("i", (int)$value);
                     $stmt->execute();
                     $stmt->close();
                 } else {
@@ -118,4 +118,11 @@ if (isset($_POST['form_submitted'])) {
     // remove day session
     unset($_SESSION['day']);
 }
+
+mysqli_close($con);
+
+$new_url = "month_calendar.php?data=" . $month . "_" . $year;
+header("Location: " . $new_url);
+die();
+
 ?>
