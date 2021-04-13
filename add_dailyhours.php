@@ -112,7 +112,7 @@ $json_proc_data = json_encode($proc_data_array, true);
                         <?php foreach ($proc_data_array as $item) { ?>
                             <div class="ad_table_row" id="workpid_<?php echo $item['workpid'] ?>" name="workpid_<?php echo $item['workpid'] ?>">
                                 <div class="ad_table_cell shortcell">
-                                    <input type="text" value="<?php echo $item['hours'] ?>" name="hours_<?php echo $item['workpid'] ?>">
+                                    <input type="text" value="<?php echo $item['hours'] ?>" id="hours_<?php echo $item['workpid'] ?>" name="hours_<?php echo $item['workpid'] ?>">
                                 </div>
                                 <div class="ad_table_cell shortcell">
                                     <?php echo $item['processletter'] ?>.

@@ -3,6 +3,8 @@
 <?php require_once('connect/conn.php'); ?>
 <?php
 
+$error_url = "error.php";
+
 if (isset($_POST['form_submitted'])) {
 
     session_start();
@@ -74,24 +76,46 @@ if (isset($_POST['form_submitted'])) {
         try {
             // if key already exists in database, update
             if (in_array($key, $data_array)) {
-                $query_update = "
-                    UPDATE apprenticeoccupationprogresstbl ao
-                    JOIN personoccupationstbl po ON po.poid = ao.poaopfk
-                    JOIN personstbl p ON p.personid = po.perspersoccfk
-                    SET ao.hours = ?
-                    WHERE ao.date = '$date'
-                    AND p.personid = $id
-                    AND ao.owpfk = $key;
-                ";
-                // echo $value;
-                $stmt = $con->prepare($query_update);
-                if ($stmt) {
-                    $stmt->bind_param("i", (int)$value);
-                    $stmt->execute();
-                    $stmt->close();
+                // if $value = 0, delete record
+                if ($value == 0) {
+                    $query_delete = "
+                        DELETE ao 
+                        FROM apprenticeoccupationprogresstbl ao
+                        JOIN personoccupationstbl po ON po.poid = ao.poaopfk
+                        JOIN personstbl p ON p.personid = po.perspersoccfk
+                        WHERE ao.date = '$date'
+                        AND p.personid = $id
+                        AND ao.owpfk = $key;
+                    ";
+                    if ($con->query($query_delete)) {
+                        echo "Record deleted successfully";
+                    } else {
+                        echo "Error deleteting record: " . $con->error;
+                        header("Location: " . $error_url);
+                        die();
+                    }
                 } else {
-                    // should probably handle failures differently here
-                    echo "Failure!!!" . $con->error;
+                    $query_update = "
+                        UPDATE apprenticeoccupationprogresstbl ao
+                        JOIN personoccupationstbl po ON po.poid = ao.poaopfk
+                        JOIN personstbl p ON p.personid = po.perspersoccfk
+                        SET ao.hours = ?
+                        WHERE ao.date = '$date'
+                        AND p.personid = $id
+                        AND ao.owpfk = $key;
+                    ";
+                    // echo $value;
+                    $stmt = $con->prepare($query_update);
+                    if ($stmt) {
+                        $stmt->bind_param("i", $value);
+                        $stmt->execute();
+                        $stmt->close();
+                    } else {
+                        // should probably handle failures differently here
+                        echo "Failure!!!" . $con->error;
+                        header("Location: " . $error_url);
+                        die();
+                    }
                 }
             }
             //else insert
