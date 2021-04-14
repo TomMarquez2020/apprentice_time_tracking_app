@@ -9,12 +9,14 @@
 
 const validateValue = (item, before_value) => {
     return (e) => {
+        const sumOfValues = getTotal();
+        console.log(sumOfValues);
         const after_value = e.target.value;
         const textfield = document.getElementById(item.id);
         if (after_value.trim() === "") {
             textfield.value = 0;
         }
-        else if (isNaN(after_value)) {
+        else if (isNaN(after_value) || sumOfValues >= 24) {
             textfield.value = before_value;
         }
     }
@@ -26,8 +28,28 @@ document.querySelectorAll('.ad_table_cell input').forEach(item => {
     item.addEventListener('change', validateValue(item, before_value));
 })
 
-// function validateValue(e, before_val) {
-//     // var value = e.target.value;
-//     console.log("before value: " + before_val);
-//     console.log("after value: " + e);
-// }
+// find total of all input values
+function getTotal() {
+    // grab all input elemens
+    var inputs = document.getElementsByTagName('input');
+    var arr = [];
+    for (var j = 0; j < inputs.length; j++) {
+        var ele = inputs[j];
+        // grab the name attribute
+        var attr = inputs[j].getAttribute('name');
+        var val = ele.value;
+        // only add values from inputs that have a name beginning with 'hours'
+        if (attr && attr.indexOf('hours') == 0) {
+            const intVal = parseInt(val);
+            // push to array only if it is an integer
+            if (!isNaN(intVal)) {
+                arr.push(intVal);
+            }
+        }
+    }
+    var total = 0;
+    for (var i = 0; i < arr.length; i++) {
+        total += arr[i];
+    }
+    return total;
+}

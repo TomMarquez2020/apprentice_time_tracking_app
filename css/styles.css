@@ -10,6 +10,13 @@ div, main{
     width: 100%;
 }
 
+.s-error {
+    background: #c512ff !important;
+    padding: 5px imp !important;
+    border-radius: 0;
+    box-shadow: 1px 1px 1px #aaaaaa;
+}
+
 .hidden {
     display: none;
 }

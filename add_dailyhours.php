@@ -94,6 +94,7 @@ $json_proc_data = json_encode($proc_data_array, true);
         </section>
         <section id="ad_right">
             <h2>Work Processes</h2>
+            <span class="hidden s-error"></span>
             <form action="process_daily_hours.php" method="post">
                 <!--    Another table here for character process and process name -->
                 <div id="ad_table">
