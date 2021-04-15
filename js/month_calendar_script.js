@@ -7,6 +7,13 @@ var data_id = document.getElementById("id").value;
 var sql_data = document.getElementById("data").value;
 var parse_data = JSON.parse(sql_data);
 
+// add onclick to submit button
+var submit_button = document.getElementById("submit_month");
+submit_button.addEventListener("click", function () {
+    const href_link = "submit_month.php";
+    window.location.href = href_link;
+});
+
 var days_of_the_week = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 var months_array = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "Novevember", "December"];
 var month_num = months_array.indexOf(data_month);

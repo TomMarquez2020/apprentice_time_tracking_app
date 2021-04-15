@@ -49,21 +49,18 @@ $sql_data = json_encode($data_array);
             <h2 id="mc_data"><?php echo $month . ' ' . $year ?></h2>
         </section>
 
-        <form type="post">
-            <input type="hidden" id="data" name="data" value='<?php echo $sql_data ?>'>
-            <input type="hidden" id="month" name="month" value="<?php echo $month ?>">
-            <input type="hidden" id="year" name="year" value="<?php echo $year ?>">
-            <input type="hidden" id="id" name="id" value="<?php echo $id ?>">
+        <input type="hidden" id="data" name="data" value='<?php echo $sql_data ?>'>
+        <input type="hidden" id="month" name="month" value="<?php echo $month ?>">
+        <input type="hidden" id="year" name="year" value="<?php echo $year ?>">
+        <input type="hidden" id="id" name="id" value="<?php echo $id ?>">
 
-            <section id="mc_calendar_block">
-                <table id="mc_table">
+        <section id="mc_calendar_block">
+            <table id="mc_table">
 
-                </table>
-            </section>
+            </table>
+        </section>
 
-        </form>
-
-        <input type="submit" button="submit">
+        <input id="submit_month" type="submit" button="submit">
 
     </main>
 

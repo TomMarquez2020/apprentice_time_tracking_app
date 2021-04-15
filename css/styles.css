@@ -150,4 +150,32 @@ section {
 }
 
 /********************************* End styles for the Add Daily hours page ************************************/
+/********************************* styles for the Submit month page ************************************/
+
+.header1 {
+    grid-area: header1;
+}
+
+.header2 {
+    grid-area: header2;
+}
+
+.main1 {
+    grid-area: main1;
+}
+
+.main2{
+    grid-area: main2;
+}
+
+.sm_grid_container {
+    display: grid;
+    grid-template-areas: 
+    'header1 header1 header1 header2 header2 header2'
+    'main1 main1 main1 main1 main2 main2';
+}
+
+
+
+/********************************* End styles for the Submit month page ************************************/
 
