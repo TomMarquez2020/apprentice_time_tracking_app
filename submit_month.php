@@ -9,7 +9,6 @@ $id = $_SESSION["id"];
 
 //  query database
 //  Need apprentice name, apprentice occupation, supervisor info
-
 $query = "SELECT concat(p.fname, ' ', p.lname) AS apprentice_name,
             o.occupationname AS occupation_name,
             concat(superv.fname, ' ', superv.lname) AS supervisor_name
@@ -30,6 +29,43 @@ $row = mysqli_fetch_assoc($rs);
 $app_name = $row['apprentice_name'];
 $app_occupation = $row['occupation_name'];
 $sup_name = $row['supervisor_name'];
+
+// Get process information
+// Get the apprentice's month and year of processes and the total amount of each
+// SELECT DISTINCT
+// owp.processletter,
+// wp.pname,
+// IFNULL(SUM(aop.hours), 0) as Montlysum
+// FROM workprocessestbl wp
+// JOIN occupationworkprocessestbl owp ON owp.procfk = wp.workprocessid
+// JOIN personoccupationstbl po ON po.occpersoccfk = owp.occfk
+// LEFT JOIN apprenticeoccupationprogresstbl aop ON aop.poaopfk = po.poid
+// 									AND aop.owpfk = owp.owpid
+// 									AND YEAR(aop.date) = 2021
+//                                     AND MONTHNAME(aop.date) = 'February'
+// WHERE po.perspersoccfk = 1
+// GROUP BY owp.processletter
+$proc_query = "SELECT DISTINCT
+                owp.processletter,
+                wp.pname,
+                IFNULL(SUM(aop.hours), 0) as MonthlySum
+                FROM workprocessestbl wp
+                JOIN occupationworkprocessestbl owp ON owp.procfk = wp.workprocessid
+                JOIN personoccupationstbl po ON po.occpersoccfk = owp.occfk
+                LEFT JOIN apprenticeoccupationprogresstbl aop ON aop.poaopfk = po.poid
+                                                    AND aop.owpfk = owp.owpid
+                                                    AND YEAR(aop.date) = $year
+                                                    AND MONTHNAME(aop.date) = '$month'
+                WHERE po.perspersoccfk = $id
+                GROUP BY owp.processletter
+            ";
+$proc_rs = mysqli_query($con, $proc_query);
+$proc_data_array   = array();
+while ($sql_data = mysqli_fetch_assoc($proc_rs)) {
+    $proc_data_array[] = $sql_data;
+}
+$proc_data_len = count($proc_data_array);
+
 ?>
 
 <!DOCTYPE html>

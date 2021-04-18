@@ -13,15 +13,15 @@ $id = $_SESSION["id"];
 $data_array   = array();
 
 $query = "SELECT 
-                        DAY(aop.date) AS Day,
-                        SUM(aop.hours) as DailySum
-                        FROM personoccupationstbl p
-                        join apprenticeoccupationprogresstbl aop ON aop.poaopfk = p.poid
-                        where p.perspersoccfk = $id
-                        AND YEAR(aop.date) = $year 
-                        AND MONTHNAME(aop.date) = '$month'
-                        GROUP BY aop.date
-                    ";
+            DAY(aop.date) AS Day,
+            SUM(aop.hours) as DailySum
+            FROM personoccupationstbl p
+            join apprenticeoccupationprogresstbl aop ON aop.poaopfk = p.poid
+            where p.perspersoccfk = $id
+            AND YEAR(aop.date) = $year 
+            AND MONTHNAME(aop.date) = '$month'
+            GROUP BY aop.date
+            ";
 $rs = mysqli_query($con, $query);
 while ($sql_data = mysqli_fetch_assoc($rs)) {
     $data_array[] = $sql_data;
