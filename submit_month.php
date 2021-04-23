@@ -81,33 +81,75 @@ $proc_data_len = count($proc_data_array);
 
 <body>
     <main id="sm_main">
-        <div class="sm_grid_container">
-            <div class="header1">
-                <p><?php echo $app_name ?></p>
-                <p><?php echo $month ?></p>
-            </div>
-            <div class="header2">
-                <p><?php echo $app_occupation ?></p>
-                <p><?php echo $year ?></p>
-            </div>
-            <div class="main1">
-                <table id="sm_process_table">
+        <form action="process_submit_month.php" method="post">
+            <div class="sm_grid_container">
+                <div class="header1">
+                    <p class="underline"><?php echo $app_name ?></p>
+                    <p class="underline"><?php echo $month ?></p>
+                </div>
+                <div class="header2">
+                    <p class="underline"><?php echo $app_occupation ?></p>
+                    <p class="underline"><?php echo $year ?></p>
+                </div>
 
-                </table>
-            </div>
-            <div class="main2">
-                <p><?php echo $sup_name ?></p>
-                <form>
-                    <table id="sm_skills_table">
+                <div class="main1">
+                    <!-- submit process table -->
+                    <div id="sm_process_table">
+                        <!--submit table header -->
+                        <div id="sm_table_header">
+                            <div class="sm_table_cell shortcell">
 
-                    </table>
+                            </div>
+                            <div class="sm_table_cell">
+                                Process
+                            </div>
+                            <div class="sm_table_cell shortcell">
+                                HRS
+                            </div>
+                        </div>
+                        <!-- end submit process header -->
+
+                        <!-- submit process table body -->
+                        <div id="sm_table_body">
+                            <?php foreach ($proc_data_array as $item) { ?>
+                                <div class="sm_table_row">
+                                    <div class="sm_table_cell shortcell">
+                                        <?php echo $item['processletter']; ?>.
+                                    </div>
+                                    <div class="sm_table_cell">
+                                        <?php echo $item['pname']; ?>
+                                    </div>
+                                    <div class="sm_table_cell shortcell underline">
+                                        <?php echo $item['MonthlySum']; ?>
+                                    </div>
+                                </div>
+
+                            <?php } ?>
+                        </div>
+                        <!-- end submit process table body -->
+
+
+                    </div>
+                    <!-- end submit process table -->
+                </div>
+                <div class="main2">
+                    <p><?php echo $sup_name ?></p>
+                    <!-- skills table -->
+                    <div id="sm_skills_table">
+                        <!-- table body -->
+                        <div id="sm_table_body">
+
+                        </div>
+                        <!-- end table body -->
+                    </div>
+                    <!-- end skills table -->
                     <input type="text">
                     <input id="submit_month_form" type="submit" button="submit">
-                </form>
 
+                </div>
             </div>
-        </div>
-        </div>
+            </div>
+        </form>
     </main>
 
     <script src="js/submit_month.js"></script>

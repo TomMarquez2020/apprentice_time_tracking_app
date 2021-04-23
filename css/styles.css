@@ -21,6 +21,10 @@ div, main{
     display: none;
 }
 
+.underline {
+    text-decoration: underline;
+}
+
 /********************************* styles for the year calendar page ************************************/
 
 .CalButton {
@@ -172,9 +176,39 @@ section {
     display: grid;
     grid-template-areas: 
     'header1 header1 header1 header2 header2 header2'
-    'main1 main1 main1 main1 main2 main2';
+    'main1 main1 main2 main2 main2 main2';
 }
 
+#sm_table {
+    width: 100%;
+    display: table;
+}
+
+#sm_table_body {
+    display: table-row-group;
+}
+
+#sm_table_header {
+    display: table-header-group;
+    font-weight: bold;
+    font-size: 15px;
+    border-bottom: 1px solid #000;
+}
+
+#sm_table_cell {
+    display: table-cell;
+    padding: 10px;
+    text-align: justify;
+    border-bottom: 1px solid #000;
+}
+
+.sm_table_row {
+    display: table-row;
+}
+
+.sm_table_cell {
+    display: table-cell;
+}
 
 
 /********************************* End styles for the Submit month page ************************************/
