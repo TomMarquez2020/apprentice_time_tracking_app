@@ -25,6 +25,14 @@ div, main{
     text-decoration: underline;
 }
 
+.shortcell {
+    width: 5%;
+}
+
+.center {
+    text-align: center;
+}
+
 /********************************* styles for the year calendar page ************************************/
 
 .CalButton {
@@ -143,10 +151,6 @@ section {
     display: table-cell;
 }
 
-.shortcell {
-    width: 5%;
-}
-
 .ad_table_row input {
     border: none;
     border-bottom: 1px solid #000;
@@ -208,6 +212,10 @@ section {
 
 .sm_table_cell {
     display: table-cell;
+}
+
+.sm_table_cell input {
+    width: 50%;
 }
 
 

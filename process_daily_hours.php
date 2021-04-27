@@ -49,7 +49,7 @@ if (isset($_POST['form_submitted'])) {
     // echo $json_form_values;
 
     // select records that already exist in the apprenticeoccupationprogress table first
-    // to see if they need to be updated
+    // to see if they need to be updated 
     $data_array = array();
     $query = "SELECT ao.owpfk
                 FROM apprenticeoccupationprogresstbl ao
