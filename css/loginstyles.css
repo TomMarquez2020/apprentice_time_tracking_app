@@ -1,0 +1,13 @@
+
+
+label {
+	display: none;
+}
+input, select, a{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+a {
+	text-align: center;
+}
